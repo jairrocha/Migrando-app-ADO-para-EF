@@ -8,6 +8,12 @@ namespace Alura.Loja.Testes.ConsoleApp
 {
     class Program
     {
+
+        /*
+         * Aviso: Criar o BD: LojaDB e criar a tabela (script da tabela no arquivo: ddl-produtos.txt)
+         * 
+         */
+
         static void Main(string[] args)
         {
             GravarUsandoAdoNet();
