@@ -14,6 +14,10 @@ namespace Alura.Loja.Testes.ConsoleApp
          * 
          */
 
+        /*Preparando o ambiente:
+         * Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 1.1
+         */
+
         static void Main(string[] args)
         {
             GravarUsandoAdoNet();
