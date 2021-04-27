@@ -9,18 +9,90 @@ namespace Alura.Loja.Testes.ConsoleApp
     class Program
     {
 
-        /*
-         * Aviso: Criar o BD: LojaDB e criar a tabela (script da tabela no arquivo: ddl-produtos.txt)
+        /* Preparando o ambiente:
          * 
-         */
-
-        /*Preparando o ambiente:
-         * Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 1.1
+         * Aviso: Criar o BD: LojaDB e criar a tabela (script da tabela no arquivo: ddl-produtos.txt)
+         * PM> Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 1.1
+         * 
          */
 
         static void Main(string[] args)
         {
-            GravarUsandoAdoNet();
+            //GravarUsandoAdoNet();
+            RecuperarProdutos();
+            GravarUsandoEntity();
+            AtualizarProduto();
+            ExcluirProdutos();
+         
+            
+
+        }
+
+        private static void GravarUsandoEntity()
+        {
+            Produto p = new Produto();
+            p.Nome = "Harry Potter e a Ordem da Fênix";
+            p.Categoria = "Livros";
+            p.Preco = 19.89;
+
+            using (var contexto = new ProdutoDAOEntity())
+            {
+               
+                contexto.Adicionar(p);
+
+            }
+
+            //Exibe produtos
+            RecuperarProdutos();
+        }
+
+        private static void AtualizarProduto()
+        {
+            //Exibir antes da alteração
+            RecuperarProdutos();
+
+            using (var repo = new ProdutoDAOEntity())
+            {
+                Produto produto = repo.Produtos().First();
+                produto.Nome = "Matrix";
+                repo.Atualizar(produto);
+            }
+
+            //Exibir após alteração
+            RecuperarProdutos();
+        }
+
+        private static void ExcluirProdutos()
+        {
+            using (var repo = new ProdutoDAOEntity())
+            {
+                IList<Produto> produtos = repo.Produtos();
+
+                foreach (var produto in produtos)
+                {
+                    repo.Remover(produto);
+                }
+
+            }
+
+            //Exibe produtos
+            RecuperarProdutos();
+        }
+
+        private static void RecuperarProdutos()
+        {
+            using (var repo = new ProdutoDAOEntity())
+            {
+                IList<Produto> produtos = repo.Produtos();
+
+                Console.WriteLine("Foram encontrados {0} produto(s).", produtos.Count) ;
+
+                foreach (var produto in produtos)
+                {
+                    Console.WriteLine(produto.Nome);
+                }
+            }
+
         }
 
         private static void GravarUsandoAdoNet()
@@ -34,6 +106,8 @@ namespace Alura.Loja.Testes.ConsoleApp
             {
                 repo.Adicionar(p);
             }
+
+            
         }
     }
 }
