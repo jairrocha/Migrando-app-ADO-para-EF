@@ -11,10 +11,18 @@ namespace Alura.Loja.Testes.ConsoleApp
 
         /* Preparando o ambiente:
          * 
-         * Aviso: Criar o BD: LojaDB e criar a tabela (script da tabela no arquivo: ddl-produtos.txt)
+         * Aviso: Remover tabela Produtos e aplicar as migrações
          * PM> Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 1.1
+         * PM> Install-Package Microsoft.EntityFrameworkCore.Tools -Version 1.1.1
          * 
          */
+
+        /* Dicas:
+         * PM> Get-Help Entity (Exibe comandos que pode ser utilizados no EF)
+         * 
+         */
+
+
 
         static void Main(string[] args)
         {
@@ -33,7 +41,7 @@ namespace Alura.Loja.Testes.ConsoleApp
             Produto p = new Produto();
             p.Nome = "Harry Potter e a Ordem da Fênix";
             p.Categoria = "Livros";
-            p.Preco = 19.89;
+            p.PrecoUnitario = 19.89;
 
             using (var contexto = new ProdutoDAOEntity())
             {
@@ -94,20 +102,6 @@ namespace Alura.Loja.Testes.ConsoleApp
             }
 
         }
-
-        private static void GravarUsandoAdoNet()
-        {
-            Produto p = new Produto();
-            p.Nome = "Harry Potter e a Ordem da Fênix";
-            p.Categoria = "Livros";
-            p.Preco = 19.89;
-
-            using (var repo = new ProdutoDAO())
-            {
-                repo.Adicionar(p);
-            }
-
-            
-        }
+                
     }
 }
