@@ -26,82 +26,26 @@ namespace Alura.Loja.Testes.ConsoleApp
 
         static void Main(string[] args)
         {
-            //GravarUsandoAdoNet();
-            RecuperarProdutos();
-            GravarUsandoEntity();
-            AtualizarProduto();
-            ExcluirProdutos();
-         
-            
+            var paoFrances = new Produto();
+            paoFrances.Nome = "Pão Francês";
+            paoFrances.PrecoUnitario = 0.40;
+            paoFrances.Unidade = "Unidade";
+            paoFrances.Categoria = "Padaria";
 
-        }
+            var compra = new Compra();
+            compra.Quantidade = 6;
+            compra.Produto = paoFrances;
+            compra.Preco = paoFrances.PrecoUnitario * compra.Quantidade;
 
-        private static void GravarUsandoEntity()
-        {
-            Produto p = new Produto();
-            p.Nome = "Harry Potter e a Ordem da Fênix";
-            p.Categoria = "Livros";
-            p.PrecoUnitario = 19.89;
-
-            using (var contexto = new ProdutoDAOEntity())
+            using (var contexto = new LojaContext())
             {
-               
-                contexto.Adicionar(p);
-
+                contexto.Compras.Add(compra);
+                contexto.SaveChanges();
             }
 
-            //Exibe produtos
-            RecuperarProdutos();
-        }
-
-        private static void AtualizarProduto()
-        {
-            //Exibir antes da alteração
-            RecuperarProdutos();
-
-            using (var repo = new ProdutoDAOEntity())
-            {
-                Produto produto = repo.Produtos().First();
-                produto.Nome = "Matrix";
-                repo.Atualizar(produto);
-            }
-
-            //Exibir após alteração
-            RecuperarProdutos();
-        }
-
-        private static void ExcluirProdutos()
-        {
-            using (var repo = new ProdutoDAOEntity())
-            {
-                IList<Produto> produtos = repo.Produtos();
-
-                foreach (var produto in produtos)
-                {
-                    repo.Remover(produto);
-                }
-
-            }
-
-            //Exibe produtos
-            RecuperarProdutos();
-        }
-
-        private static void RecuperarProdutos()
-        {
-            using (var repo = new ProdutoDAOEntity())
-            {
-                IList<Produto> produtos = repo.Produtos();
-
-                Console.WriteLine("Foram encontrados {0} produto(s).", produtos.Count) ;
-
-                foreach (var produto in produtos)
-                {
-                    Console.WriteLine(produto.Nome);
-                }
-            }
 
         }
+
                 
     }
 }
