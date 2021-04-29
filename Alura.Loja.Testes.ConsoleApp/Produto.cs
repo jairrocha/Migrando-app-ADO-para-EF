@@ -15,6 +15,7 @@ namespace Alura.Loja.Testes.ConsoleApp
 
         //Relacionamento N TO M (Nessa versão de EF é necessário representar em uma classe (PromocaoProduto) )
         public IList<PromocaoProduto> Promocoes { get; set; }
+        public IList<Compra> Compras  { get; set; }
 
     }
 }
