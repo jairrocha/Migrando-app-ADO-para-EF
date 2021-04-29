@@ -26,51 +26,23 @@ namespace Alura.Loja.Testes.ConsoleApp
 
         static void Main(string[] args)
         {
-
-            var p1 = new Produto()
+            var fulano = new Cliente();
+            fulano.Nome = "Fulaninho de tal";
+            fulano.EnderecoDeEntrega = new Endereco()
             {
-                Nome = "Suco de laranja",
-                Categoria = "Bebidas",
-                PrecoUnitario = 8.79,
-                Unidade = "Litros"
+                Numero = 12,
+                Logradouro = "Rua A",
+                Complemento = "Casa",
+                Bairro = "Centro",
+                Cidade = "A"
+
             };
-            var p2 = new Produto()
-            {
-                Nome = "Café",
-                Categoria = "Bebidas",
-                PrecoUnitario = 12.45,
-                Unidade = "Gramas"
-            };
-            var p3 = new Produto()
-            {
-                Nome = "Macarrão",
-                Categoria = "Alimentos",
-                PrecoUnitario = 4.23,
-                Unidade = "Gramas"
-            };
-
-            var promocao = new Promocao();
-            promocao.Descricao = "Pascoa Feliz";
-            promocao.DataInicio = DateTime.Now;
-            promocao.DataTermino = DateTime.Now.AddMonths(3);
-
-            promocao.IncluiProduto(p1);
-            promocao.IncluiProduto(p2);
-            promocao.IncluiProduto(p3);
-
-
 
             using (var contexto = new LojaContext())
             {
-                contexto.Promocoes.Add(promocao);
+                contexto.Clientes.Add(fulano);
                 contexto.SaveChanges();
-
-                var produto = contexto.Produtos.Where(p => p.Id == 3).SingleOrDefault();
-                contexto.Produtos.Remove(produto);
-                contexto.SaveChanges();
-
             }
-
 
         }
 
